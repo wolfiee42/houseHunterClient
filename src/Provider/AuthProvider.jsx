@@ -6,7 +6,10 @@ import toast from "react-hot-toast";
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
+
     const axiosPublic = useAxiosPublic();
+
+
     const signupUser = user => {
         axiosPublic.post("/userregistration", user)
             .then(res => {
@@ -15,10 +18,11 @@ const AuthProvider = ({ children }) => {
                     axiosPublic.post('/jwt', userEmail)
                         .then(res => {
                             if (res.data.token && res.data.userEmail) {
+                                toast.success("User Created Successfully!");
                                 localStorage.setItem("Access-token", res.data.token);
                                 localStorage.setItem("user-email", userEmail.email);
                                 localStorage.setItem("user-username", userEmail.username);
-                                return toast.success("User Created Successfully!");
+                                return window.location.reload();
                             }
                         });
                 }
@@ -41,10 +45,11 @@ const AuthProvider = ({ children }) => {
                         .then(res => {
                             console.log(res.data);
                             if (res.data.token && res.data.userEmail) {
+                                toast.success("User logged in Successfully!");
                                 localStorage.setItem("Access-token", res.data.token);
                                 localStorage.setItem("user-username", username);
                                 localStorage.setItem("user-email", res.data.userEmail.email);
-                                return toast.success("User logged in Successfully!");
+                                return window.location.reload();
                             }
                         });
                 }
@@ -54,9 +59,15 @@ const AuthProvider = ({ children }) => {
             })
     }
 
+    const signout = () => {
+        localStorage.removeItem("Access-token");
+        localStorage.removeItem("user-username");
+        localStorage.removeItem("user-email");
+    }
 
 
-    const authinfo = { signupUser, signinUser }
+
+    const authinfo = { signupUser, signinUser, signout }
     return (
         <AuthContext.Provider value={authinfo}>
             {children}
