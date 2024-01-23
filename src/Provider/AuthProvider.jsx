@@ -15,14 +15,16 @@ const AuthProvider = ({ children }) => {
             .then(res => {
                 if (res.data.userId && res.data.message) {
                     const userEmail = user;
+                    const userdesignation = user
                     axiosPublic.post('/jwt', userEmail)
                         .then(res => {
                             if (res.data.token && res.data.userEmail) {
                                 toast.success("User Created Successfully!");
                                 localStorage.setItem("Access-token", res.data.token);
                                 localStorage.setItem("user-email", userEmail.email);
+                                localStorage.setItem("user-designation", userdesignation.designation);
                                 localStorage.setItem("user-username", userEmail.username);
-                                return window.location.reload();
+                                window.location.reload()
                             }
                         });
                 }
@@ -40,6 +42,7 @@ const AuthProvider = ({ children }) => {
                 if (res.data.user) {
                     const userEmail = user;
                     const username = res.data.user.username;
+                    const designation = res.data.user.designation;
                     console.log(username);
                     axiosPublic.post('/jwt', userEmail)
                         .then(res => {
@@ -48,8 +51,9 @@ const AuthProvider = ({ children }) => {
                                 toast.success("User logged in Successfully!");
                                 localStorage.setItem("Access-token", res.data.token);
                                 localStorage.setItem("user-username", username);
+                                localStorage.setItem("user-designation", designation);
                                 localStorage.setItem("user-email", res.data.userEmail.email);
-                                return window.location.reload();
+                                window.location.reload()
                             }
                         });
                 }

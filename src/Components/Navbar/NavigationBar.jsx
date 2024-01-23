@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Container from "../Container/Container";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -7,23 +7,24 @@ const NavigationBar = () => {
     const token = localStorage.getItem("Access-token");
     const { signout } = useContext(AuthContext);
 
-
+    const handleLogout = () => {
+        signout();
+        return window.location.reload();
+    }
     const navitems = <>
-        <li><NavLink to="/">Home</NavLink></li>
+        <li><Link to="/">Home</Link></li>
         {
-            token && <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+            token && <> <li><Link to="/dashboard">Dashboard</Link></li>
+                <li><button onClick={handleLogout} className="btn bg-cyan-500 hover:bg-cyan-600 text-white pt-4 rounded-full">Log Out</button></li> </>
         }
         {
             !token && <>
-                <li><NavLink to="/signin">Login</NavLink></li>
-                <li><NavLink to="/signup">Registration</NavLink></li>
+                <li><Link to="/signup">Registration</Link></li>
+                <li><Link to="/signin" className="btn bg-cyan-500 hover:bg-cyan-600 text-white pt-4 rounded-full">Login</Link></li>
             </>
         }
     </>
-    const handleLogout = () => {
-        signout();
-        window.location.reload();
-    }
+
 
     return (
         <Container>
@@ -40,10 +41,9 @@ const NavigationBar = () => {
                     <a className="btn btn-ghost text-xl">daisyUI</a>
                 </div>
                 <div className="navbar-end hidden md:flex items-center" >
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="menu menu-horizontal px-1 items-center">
                         {navitems}
 
-                        {token && <li><button onClick={handleLogout} className="btn btn-sm">Log Out</button></li>}
                     </ul>
                 </div>
             </div>

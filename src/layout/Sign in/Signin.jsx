@@ -23,19 +23,16 @@ const Signin = () => {
     }
 
     if (user) {
-        return (
-            <>{navigate("/")}
-                window.location.reload();</>
-        )
+        return navigate("/");
     }
 
-    
+
     if (!user) {
         return (
             <div>
                 <form onSubmit={handleRegister} className="flex flex-col items-center justify-center m-5 gap-5">
-                    <input type="email" placeholder="Email" className="border-2 p-3" name="email" />
-                    <input type="password" placeholder="Password" className="border-2 p-3" name="password" />
+                    <input type="email" placeholder="Email" className="input input-bordered w-full max-w-xs" required name="email" />
+                    <input type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" required name="password" />
                     <button type="submit" className="bg-black text-white p-3 hover:rounded-lg transition delay-700">Login</button>
                 </form>
                 <Toaster
