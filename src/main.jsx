@@ -9,6 +9,9 @@ import Home from './layout/home/Home.jsx';
 import Signup from './layout/Sign up/Signup.jsx';
 import Signin from "./layout/Sign in/Signin.jsx";
 import AuthProvider from './Provider/AuthProvider.jsx';
+import Dashboard from './layout/dashboard/Dashboard.jsx';
+import OwnerDash from './layout/dashboard/owner/OwnerDash.jsx';
+import AddHouse from './layout/dashboard/owner/AddHouse.jsx';
 
 
 
@@ -32,6 +35,23 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      // owner
+      {
+        path: "/dashboard/ownerdashboard",
+        element: <OwnerDash />,
+      },
+      {
+        path: "/dashboard/addhouse",
+        element: <AddHouse />
+      },
+
+      // renter
+    ]
+  }
 ]);
 
 

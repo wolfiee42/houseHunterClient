@@ -2,7 +2,12 @@ import { Link } from "react-router-dom"
 import Container from "../Container/Container";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-const NavigationBar = () => {
+import { MdOutlineAddHomeWork } from "react-icons/md";
+
+
+
+
+const Dashnavbar = () => {
 
     const token = localStorage.getItem("Access-token");
     const { signout } = useContext(AuthContext);
@@ -13,15 +18,9 @@ const NavigationBar = () => {
     }
     const navitems = <>
         <li><Link to="/">Home</Link></li>
+        <li><Link to="/dashboard/addhouse" className="flex items-center">Add New House <MdOutlineAddHomeWork className="text-xl" /> </Link></li>
         {
-            token && <> <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><button onClick={handleLogout} className="btn bg-cyan-500 hover:bg-cyan-600 text-white pt-4 rounded-full">Log Out</button></li> </>
-        }
-        {
-            !token && <>
-                <li><Link to="/signup">Registration</Link></li>
-                <li><Link to="/signin" className="btn bg-cyan-500 hover:bg-cyan-600 text-white pt-4 rounded-full">Login</Link></li>
-            </>
+            token && <li><button onClick={handleLogout} className="btn bg-cyan-500 hover:bg-cyan-600 text-white pt-4 rounded-full">Log Out</button></li>
         }
     </>
 
@@ -51,4 +50,4 @@ const NavigationBar = () => {
     );
 };
 
-export default NavigationBar;
+export default Dashnavbar;
